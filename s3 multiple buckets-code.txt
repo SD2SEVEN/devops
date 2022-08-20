@@ -1,0 +1,24 @@
+variable "region" {
+  description = "my region"
+  type = string
+  default = "eu-west-2"
+}
+
+variable "s3_bucket_name" {
+   type = list(string)
+   default = ["terr-newtest-buc-0", "terr-newtest-buc-2", "terr-newtest-buc-3"]
+}
+resource "aws_s3_bucket" "sdsevens_bucket" {
+   count = "${length(var.s3_bucket_name)}"
+   bucket = "${var.s3_bucket_name[count.index]}"
+   acl = "private"
+}
+ provider "aws" {
+    region =var.region
+ }
+
+
+
+
+
+
